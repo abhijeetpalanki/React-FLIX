@@ -18,8 +18,28 @@
 
 .flix-logo {
   width: 300px;
-  margin-top: 20px;
+  display: flex;
+  align-items: center;
   float: left;
+  text-decoration: none;
+}
+
+.flix-logo-react {
+  color: #fff;
+  font-size: 30px;
+  margin-right: 10px;
+  font-family: 'Rock Salt', cursive;
+}
+
+.flix-logo-flix {
+  color: #fff;
+  font-size: 50px;
+  font-family: 'Black Ops One', cursive;
+}
+
+.flix-logo-image {
+  position: unset !important;
+  margin-right: 20px;
 }
 
 .flix-tmdb-logo {
