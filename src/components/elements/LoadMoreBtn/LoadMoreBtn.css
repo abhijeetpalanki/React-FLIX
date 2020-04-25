@@ -1,0 +1,19 @@
+.flix-loadmorebtn {
+  background: #16d47b;
+  width: 100%;
+  min-height: 50px;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.flix-loadmorebtn p {
+  font-family: 'Abel', sans-serif;
+  font-size: 42px;
+  padding: 20px;
+}
+
+.flix-loadmorebtn:hover {
+  opacity: 0.8;
+}
