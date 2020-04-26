@@ -1,10 +1,10 @@
 import React from 'react';
 import './LoadMoreBtn.css';
 
-const LoadMoreBtn = (props) => {
+const LoadMoreBtn = ({ onClick, text }) => {
   return (
-    <div className="flix-loadmorebtn" onClick={props.onClick}>
-      <p>{props.text}</p>
+    <div className="flix-loadmorebtn" onClick={() => onClick(true)}>
+      <p>{text}</p>
     </div>
   );
 };

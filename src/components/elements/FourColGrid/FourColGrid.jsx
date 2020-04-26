@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './FourColGrid.css';
 
-const FourColGrid = (props) => {
+const FourColGrid = ({ children, header, loading }) => {
   const renderElements = () => {
-    const gridElements = props.children.map((element, i) => {
+    const gridElements = children.map((element, i) => {
       return (
         <div key={i} className="flix-grid-element">
           {element}
@@ -16,7 +16,7 @@ const FourColGrid = (props) => {
 
   return (
     <div className="flix-grid">
-      {props.header && !props.loading ? <h1>{props.header}</h1> : null}
+      {header && !loading ? <h1>{header}</h1> : null}
 
       <div className="flix-grid-content">{renderElements()}</div>
     </div>

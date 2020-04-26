@@ -34,89 +34,90 @@ export class Home extends Component {
       this.setState({
         loading: true,
       });
-      const endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
-      this.fetchItems(endpoint);
+      this.fetchItems(this.createEndpoint('movie/popular', false, ''));
     }
   }
 
-  fetchItems = (endpoint) => {
-    fetch(endpoint)
-      .then((result) => result.json())
-      .then((result) => {
-        this.setState(
-          {
-            movies: [...this.state.movies, ...result.results],
-            heroImage: this.state.heroImage || result.results[0],
-            loading: false,
-            currentPage: result.page,
-            totalPages: result.total_pages,
-          },
-          () => {
-            if (this.state.searchTerm === '') {
-              localStorage.setItem('HomeState', JSON.stringify(this.state));
-            }
+  fetchItems = async (endpoint) => {
+    const { movies, heroImage, searchTerm } = this.state;
+    const result = await (await fetch(endpoint)).json();
+
+    try {
+      this.setState(
+        {
+          movies: [...movies, ...result.results],
+          heroImage: heroImage || result.results[0],
+          loading: false,
+          currentPage: result.page,
+          totalPages: result.total_pages,
+        },
+        () => {
+          if (searchTerm === '') {
+            localStorage.setItem('HomeState', JSON.stringify(this.state));
           }
+        }
+      );
+    } catch (error) {
+      console.log('There was an error: ', error);
+    }
+  };
+
+  createEndpoint = (type, loadMore, term) => {
+    return `${API_URL}${type}?api_key=${API_KEY}&language=en-US&page=${
+      loadMore && this.state.currentPage + 1
+    }&query=${term}`;
+  };
+
+  updateItems = (loadMore, term) => {
+    this.setState(
+      {
+        movies: loadMore ? [...this.state.movies] : [],
+        loading: true,
+        searchTerm: loadMore ? this.state.searchTerm : term,
+      },
+      () => {
+        this.fetchItems(
+          !this.state.searchTerm
+            ? this.createEndpoint('movie/popular', loadMore, '')
+            : this.createEndpoint(
+                'search/movie',
+                loadMore,
+                this.state.searchTerm
+              )
         );
-      });
-  };
-
-  searchItems = (term) => {
-    let endpoint = '';
-
-    this.setState({
-      movies: [],
-      loading: true,
-      searchTerm: term,
-    });
-
-    if (term === '') {
-      endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=1`;
-    } else {
-      endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${term}`;
-    }
-
-    this.fetchItems(endpoint);
-  };
-
-  loadMoreItems = () => {
-    let endpoint = '';
-    this.setState({
-      loading: true,
-    });
-
-    if (this.state.searchTerm === '') {
-      endpoint = `${API_URL}movie/popular?api_key=${API_KEY}&language=en-US&page=${
-        this.state.currentPage + 1
-      }`;
-    } else {
-      endpoint = `${API_URL}search/movie?api_key=${API_KEY}&language=en-US&query=${
-        this.state.searchTerm
-      }&page=${this.state.currentPage + 1}`;
-    }
-
-    this.fetchItems(endpoint);
+      }
+    );
   };
 
   render() {
+    const {
+      movies,
+      heroImage,
+      loading,
+      currentPage,
+      totalPages,
+      searchTerm,
+    } = this.state;
+
     return (
       <div className="flix-home">
-        {this.state.heroImage ? (
+        {heroImage && !searchTerm ? (
           <div>
             <HeroImage
-              image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${this.state.heroImage.backdrop_path}`}
-              title={this.state.heroImage.original_title}
-              text={this.state.heroImage.overview}
+              image={`${IMAGE_BASE_URL}${BACKDROP_SIZE}${heroImage.backdrop_path}`}
+              title={heroImage.original_title}
+              text={heroImage.overview}
             />
-            <SearchBar callback={this.searchItems} />
           </div>
         ) : null}
+        <SearchBar callback={this.updateItems} />
 
         <div className="flix-home-grid">
           <FourColGrid
-            header={this.state.searchTerm ? 'Search Results' : 'Popular Movies'}
-            loading={this.state.loading}
+            header={searchTerm ? 'Search Results' : 'Popular Movies'}
+            loading={loading}
           >
-            {this.state.movies.map((movie, i) => {
+            {movies.map((movie, i) => {
               return (
                 <MovieThumb
                   key={i}
@@ -133,11 +134,10 @@ export class Home extends Component {
             })}
           </FourColGrid>
 
-          {this.state.loading ? <Spinner /> : null}
+          {loading ? <Spinner /> : null}
 
-          {this.state.currentPage <= this.state.totalPages &&
-          !this.state.loading ? (
-            <LoadMoreBtn text="Load More" onClick={this.loadMoreItems} />
+          {currentPage < totalPages && !loading ? (
+            <LoadMoreBtn text="Load More" onClick={this.updateItems} />
           ) : null}
         </div>
       </div>

@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './Navigation.css';
 
-const Navigation = (props) => {
+const Navigation = ({ movie }) => {
   return (
     <div className="flix-navigation">
       <div className="flix-navigation-content">
         <Link to="/">
           <p>Home</p>
         </Link>
-        <p>/ {props.movie}</p>
+        <p>/ {movie}</p>
       </div>
     </div>
   );
