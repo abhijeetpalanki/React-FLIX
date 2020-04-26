@@ -1,17 +1,17 @@
 .flix-searchbar {
-  width: 100%;
-  height: 105px;
+  width: 80%;
+  height: 80px;
   background: #1c1c1c;
-  position: relative;
-  padding: 25px 20px 0px 20px;
-  box-sizing: border-box;
   color: #fff;
+  display: flex;
+  float: right;
+  align-items: center;
 }
 
 .flix-searchbar-content {
   max-width: 1280px;
   width: 100%;
-  height: 55px;
+  height: 45px;
   background: #353535;
   margin: 0 auto;
   border-radius: 40px;
@@ -22,24 +22,77 @@
 .flix-fa-search {
   position: absolute;
   left: 20px;
-  top: 6px;
+  top: 10px;
   color: #fff;
 }
 
 .flix-searchbar-input {
   font-family: 'Abel', sans-serif;
-  font-size: 38px;
+  font-size: 32px;
   position: absolute;
-  left: 70px;
-  top: 7px;
   border: 0;
   background: transparent;
   height: 40px;
   color: #fff;
+  vertical-align: middle;
+  text-align: center;
+  width: 100%;
 }
 
 .flix-searchbar-input:focus {
   outline: none;
+}
+
+.flix-header {
+  width: 100%;
+  height: auto;
+  background: #1c1c1c;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+.flix-header-content {
+  max-width: 1280px;
+  min-height: 100px;
+  height: auto;
+  padding: 0px 5px;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.flix-logo {
+  width: 20%;
+  display: flex;
+  align-items: center;
+  float: left;
+  text-decoration: none;
+}
+
+.flix-logo-react {
+  color: #fff;
+  font-size: 30px;
+  margin-right: 10px;
+  font-family: 'Rock Salt', cursive;
+}
+
+.flix-logo-flix {
+  color: #fff;
+  font-size: 50px;
+  margin-right: 20px;
+  font-family: 'Black Ops One', cursive;
+}
+
+@media screen and (max-width: 500px) {
+  .flix-header-content {
+    max-width: 1280px;
+    min-height: 0px;
+  }
+
+  .flix-logo {
+    width: 150px;
+    margin-top: 5px;
+  }
 }
 
 @media screen and (max-width: 720px) {

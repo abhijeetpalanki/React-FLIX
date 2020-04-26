@@ -101,6 +101,8 @@ export class Home extends Component {
 
     return (
       <div className="flix-home">
+        <SearchBar callback={this.updateItems} />
+
         {heroImage && !searchTerm ? (
           <div>
             <HeroImage
@@ -110,7 +112,6 @@ export class Home extends Component {
             />
           </div>
         ) : null}
-        <SearchBar callback={this.updateItems} />
 
         <div className="flix-home-grid">
           <FourColGrid
