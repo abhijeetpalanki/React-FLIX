@@ -46,7 +46,19 @@
   color: #fff;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 1280px) {
+  .flix-heroimage-text {
+    max-width: 100%;
+    margin-right: 0;
+  }
+
+  .flix-heroimage-text h1,
+  p {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 800px) {
   .flix-heroimage-text {
     max-width: 100%;
   }
@@ -57,8 +69,12 @@
   }
 
   .flix-heroimage-text p {
-    font-size: 16px;
-    line-height: 20px;
     color: #fff;
   }
+}
+
+@media screen and (max-width: 600px) {
+}
+
+@media screen and (max-width: 400px) {
 }
